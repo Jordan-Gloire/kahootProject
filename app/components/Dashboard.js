@@ -1,55 +1,75 @@
-
 "use client";
-// pages/dashboard.js
-import React from 'react';
-import { Bar } from 'react-chartjs-2';
+// pages/dashboard.tsx
+import { useState } from "react";
+import { motion } from "framer-motion";
 import {
   Chart as ChartJS,
   CategoryScale,
   LinearScale,
   BarElement,
   Title,
-  Tooltip,
-  Legend,
-} from 'chart.js';
+} from "chart.js";
+import { Bar } from "react-chartjs-2";
+import {
+  PlayIcon,
+  ChartBarIcon,
+  UserIcon,
+  HomeIcon,
+} from "@heroicons/react/outline";
 
-// Enregistrement des éléments et échelles nécessaires
-ChartJS.register(CategoryScale, LinearScale, BarElement, Title, Tooltip, Legend);
+// Enregistrer les composants Chart.js
+ChartJS.register(CategoryScale, LinearScale, BarElement, Title);
+import CardStat from '../components/CardStat';
 
 const Dashboard = () => {
-  // Données du graphique
-  const data = {
-    labels: ['Jan', 'Feb', 'Mar', 'Apr', 'May'],
+  const [gameCount, setGameCount] = useState(12); // Exemple de statistique
+
+  const chartData = {
+    labels: ["Jeu 1", "Jeu 2", "Jeu 3", "Jeu 4"],
     datasets: [
       {
-        label: 'Sales',
-        data: [65, 59, 80, 81, 56],
-        backgroundColor: 'rgba(75, 192, 192, 0.2)',
-        borderColor: 'rgba(75, 192, 192, 1)',
-        borderWidth: 1,
+        label: "Scores",
+        data: [80, 90, 60, 70],
+        backgroundColor: ["#34D399", "#F59E0B", "#3B82F6", "#EF4444"],
       },
     ],
   };
 
-  const options = {
-    responsive: true,
-    plugins: {
-      legend: {
-        position: 'top',
-      },
-      title: {
-        display: true,
-        text: 'Monthly Sales Data',
-      },
-    },
-  };
-
   return (
-    <div>
-      <h2>Dashboard</h2>
-      <Bar data={data} options={options} />
+    <div className="p-10 bg-gradient-to-br from-indigo-100 via-purple-100 to-pink-50 min-h-screen">
+      {/* Header du Dashboard */}
+      <div className="flex justify-between items-center mb-8">
+        <h1 className="text-4xl font-bold text-gray-700">
+          🎮 Dashboard - Jeux Interactifs
+        </h1>
+        <button className="px-4 py-2 bg-indigo-600 text-white rounded-lg shadow-lg hover:bg-indigo-500">
+          Ajouter un Nouveau Jeu
+        </button>
+      </div>
+
+      {/* Statistiques Globales */}
+      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 p-6">
+    <CardStat title="Nombre d'élèves" value={120} icon={<UserIcon className="h-8 w-8 text-indigo-600" />} />
+    <CardStat title="Jeux créés" value={15} icon={<HomeIcon className="h-8 w-8 text-indigo-600" />} />
+    <CardStat title="Performance moyenne" value={85} icon={<UserIcon className="h-8 w-8 text-indigo-600" />} />
+  </div>
+
+      {/* Graphique des performances */}
+      <motion.div
+        initial={{ opacity: 0, y: 50 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ duration: 0.5 }}
+        className="bg-white p-6 rounded-lg shadow-lg"
+      >
+        <h2 className="text-2xl font-semibold text-gray-600 mb-4">
+          Performances Récentes
+        </h2>
+        <Bar data={chartData} />
+      </motion.div>
     </div>
   );
 };
+
+
 
 export default Dashboard;
