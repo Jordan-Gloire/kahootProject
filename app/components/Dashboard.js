@@ -1,4 +1,7 @@
-// components/Dashboard.js
+
+"use client";
+// pages/dashboard.js
+import React from 'react';
 import { Bar } from 'react-chartjs-2';
 import {
   Chart as ChartJS,
@@ -10,16 +13,20 @@ import {
   Legend,
 } from 'chart.js';
 
+// Enregistrement des éléments et échelles nécessaires
 ChartJS.register(CategoryScale, LinearScale, BarElement, Title, Tooltip, Legend);
 
 const Dashboard = () => {
+  // Données du graphique
   const data = {
-    labels: ['Maths', 'Physique', 'Histoire', 'Géographie'],
+    labels: ['Jan', 'Feb', 'Mar', 'Apr', 'May'],
     datasets: [
       {
-        label: 'Performance des élèves',
-        data: [85, 90, 75, 80],
-        backgroundColor: 'rgba(54, 162, 235, 0.5)',
+        label: 'Sales',
+        data: [65, 59, 80, 81, 56],
+        backgroundColor: 'rgba(75, 192, 192, 0.2)',
+        borderColor: 'rgba(75, 192, 192, 1)',
+        borderWidth: 1,
       },
     ],
   };
@@ -32,14 +39,14 @@ const Dashboard = () => {
       },
       title: {
         display: true,
-        text: 'Performance par matière',
+        text: 'Monthly Sales Data',
       },
     },
   };
 
   return (
-    <div className="bg-white shadow-md p-6 rounded-lg">
-      <h1 className="text-2xl font-bold mb-4">Tableau de bord</h1>
+    <div>
+      <h2>Dashboard</h2>
       <Bar data={data} options={options} />
     </div>
   );
