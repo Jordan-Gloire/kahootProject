@@ -16,10 +16,12 @@ import {
   UserIcon,
   HomeIcon,
 } from "@heroicons/react/outline";
+import Link from "next/link";
 
 // Enregistrer les composants Chart.js
 ChartJS.register(CategoryScale, LinearScale, BarElement, Title);
-import CardStat from '../components/CardStat';
+import CardStat from "../components/CardStat";
+import Header from "./Header";
 
 const Dashboard = () => {
   const [gameCount, setGameCount] = useState(12); // Exemple de statistique
@@ -42,17 +44,38 @@ const Dashboard = () => {
         <h1 className="text-4xl font-bold text-gray-700">
           🎮 Dashboard - Jeux Interactifs
         </h1>
-        <button className="px-4 py-2 bg-indigo-600 text-white rounded-lg shadow-lg hover:bg-indigo-500">
-          Ajouter un Nouveau Jeu
-        </button>
+        <Link
+          className="px-4 py-2 bg-indigo-600 text-white rounded-lg shadow-lg hover:bg-indigo-500"
+          href="/create-game"
+        >
+          Ajouter une Ecole
+        </Link>
+        <Link
+          className="px-4 py-2 bg-indigo-600 text-white rounded-lg shadow-lg hover:bg-indigo-500"
+          href="/ajouterProf"
+        >
+          Ajouter un Enseignant
+        </Link>
       </div>
 
       {/* Statistiques Globales */}
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 p-6">
-    <CardStat title="Nombre d'élèves" value={120} icon={<UserIcon className="h-8 w-8 text-indigo-600" />} />
-    <CardStat title="Jeux créés" value={15} icon={<HomeIcon className="h-8 w-8 text-indigo-600" />} />
-    <CardStat title="Performance moyenne" value={85} icon={<UserIcon className="h-8 w-8 text-indigo-600" />} />
-  </div>
+        <CardStat
+          title="Nombre d'élèves"
+          value={120}
+          icon={<UserIcon className="h-8 w-8 text-indigo-600" />}
+        />
+        <CardStat
+          title="Jeux créés"
+          value={15}
+          icon={<HomeIcon className="h-8 w-8 text-indigo-600" />}
+        />
+        <CardStat
+          title="Performance moyenne"
+          value={85}
+          icon={<UserIcon className="h-8 w-8 text-indigo-600" />}
+        />
+      </div>
 
       {/* Graphique des performances */}
       <motion.div
@@ -69,7 +92,5 @@ const Dashboard = () => {
     </div>
   );
 };
-
-
 
 export default Dashboard;

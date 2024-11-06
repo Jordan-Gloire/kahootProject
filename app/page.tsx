@@ -8,7 +8,7 @@ export default function Home() {
     <div className="flex h-screen bg-gray-100">
       <Sidebar />
       <div className="flex-1 flex flex-col">
-        <Header /> {/* Intégration du Header ici */}
+        <Header />
         <div className="p-6 flex-1">
           <Dashboard />
         </div>

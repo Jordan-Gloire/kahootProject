@@ -1,32 +1,27 @@
 "use client";
-// pages/create-game.tsx
 import { useState, ChangeEvent, FormEvent } from "react";
 import { motion } from "framer-motion";
 import Header from "../components/Header";
 import { ToastContainer, toast, Bounce } from "react-toastify";
 
 import "react-toastify/dist/ReactToastify.css";
-interface SchoolFormData {
-  libelle: string;
-  adresse: string;
-  ville: string;
-  telephone: string;
+interface ProfFormData {
+  name: string;
+  phone: string;
   email: string;
-  fichier: string; // On permet le fichier de type File ou null
-  admin: string;
-  pays: string;
+  statut: string;
+  ecole: string;
+  password: string;
 }
 
-const CreateSchool: React.FC = () => {
-  const [formData, setFormData] = useState<SchoolFormData>({
-    libelle: "",
-    adresse: "",
-    ville: "",
-    telephone: "",
+const RegisterProf: React.FC = () => {
+  const [formData, setFormData] = useState<ProfFormData>({
+    name: "",
+    phone: "",
     email: "",
-    fichier: "", // Initialisé à null
-    admin: "",
-    pays: "",
+    statut: "",
+    ecole: "",
+    password: "",
   });
 
   const handleChange = (
@@ -34,26 +29,25 @@ const CreateSchool: React.FC = () => {
   ) => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
   };
-  const notify = () => toast("L'ecole a étè ajoute avec success !");
+  const notify = () => toast("Utilisateur créé avec succès !");
 
-  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
+  const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    // Traitement du formulaire (soumission, validation, etc.)
+    // Préparez les données pour l'envoi
     const dataToSend = {
-      libelle: formData.libelle,
-      adresse: formData.adresse,
-      ville: formData.ville,
-      telephone: formData.telephone,
+      name: formData.name,
       email: formData.email,
-      fichier: formData.fichier,
-      admin: formData.admin,
-      pays: formData.pays,
+      phone: formData.phone,
+      statut: formData.statut,
+      password: formData.password,
+      ecole: formData.ecole,
     };
-    console.log("Form Data:", dataToSend);
+    console.log("Form Data:", dataToSend); // Log form data before sending
 
     try {
-      const response = await fetch("api/addecole", {
+      const response = await fetch("api/addprof", {
         method: "POST",
+        // mode: "no-cors",
         headers: {
           "Content-Type": "application/json",
         },
@@ -78,7 +72,6 @@ const CreateSchool: React.FC = () => {
       );
     }
   };
-
   return (
     <>
       <Header />
@@ -90,53 +83,21 @@ const CreateSchool: React.FC = () => {
           transition={{ duration: 0.6 }}
         >
           <h2 className="text-2xl font-bold mb-6 text-center text-green-600">
-            {"Inscription d'une École"} 🏫
+            {"Inscription d'un Nouveau Professeur"} 🧑‍🏫
           </h2>
 
           <form onSubmit={handleSubmit} className="space-y-5">
-            {/* Libellé */}
+            {/* Nom */}
             <div>
               <label className="block text-sm font-medium text-gray-700">
-                Libellé
+                Nom
               </label>
               <input
                 type="text"
-                name="libelle"
-                value={formData.libelle}
+                name="name"
+                value={formData.name}
                 onChange={handleChange}
-                placeholder="Entrez le libellé de l'école"
-                className="w-full mt-2 p-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-green-400"
-                required
-              />
-            </div>
-
-            {/* Adresse */}
-            <div>
-              <label className="block text-sm font-medium text-gray-700">
-                Adresse
-              </label>
-              <input
-                type="text"
-                name="adresse"
-                value={formData.adresse}
-                onChange={handleChange}
-                placeholder="Entrez l'adresse de l'école"
-                className="w-full mt-2 p-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-green-400"
-                required
-              />
-            </div>
-
-            {/* Ville */}
-            <div>
-              <label className="block text-sm font-medium text-gray-700">
-                Ville
-              </label>
-              <input
-                type="text"
-                name="ville"
-                value={formData.ville}
-                onChange={handleChange}
-                placeholder="Entrez la ville"
+                placeholder="Entrez le nom du professeur"
                 className="w-full mt-2 p-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-green-400"
                 required
               />
@@ -149,8 +110,8 @@ const CreateSchool: React.FC = () => {
               </label>
               <input
                 type="tel"
-                name="telephone"
-                value={formData.telephone}
+                name="phone"
+                value={formData.phone}
                 onChange={handleChange}
                 placeholder="Ex: +242 066010436"
                 className="w-full mt-2 p-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-green-400"
@@ -174,49 +135,52 @@ const CreateSchool: React.FC = () => {
               />
             </div>
 
-            {/* Fichier */}
+            {/* École */}
             <div>
               <label className="block text-sm font-medium text-gray-700">
-                Fichier
+                École
               </label>
               <input
                 type="text"
-                name="fichier"
+                name="ecole"
+                value={formData.ecole}
                 onChange={handleChange}
+                placeholder="Nom de l'école"
                 className="w-full mt-2 p-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-green-400"
                 required
               />
             </div>
 
-            {/* Admin */}
+            {/* Password */}
             <div>
               <label className="block text-sm font-medium text-gray-700">
-                Admin
+                Mot de passe
               </label>
               <input
-                type="text"
-                name="admin"
-                value={formData.admin}
+                type="password"
+                name="password"
+                value={formData.password}
                 onChange={handleChange}
-                placeholder="Nom de l'administrateur"
+                placeholder="Entrez le mot de passe"
                 className="w-full mt-2 p-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-green-400"
                 required
               />
             </div>
 
-            {/* Pays */}
+            {/* Statut */}
             <div>
               <label className="block text-sm font-medium text-gray-700">
-                Pays
+                Statut
               </label>
+
               <input
-                type="text"
-                name="pays"
-                value={formData.pays}
+                value={formData.statut}
                 onChange={handleChange}
-                placeholder="Entrez le pays"
                 className="w-full mt-2 p-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-green-400"
                 required
+                type="text"
+                name="statut"
+                placeholder="statut"
               />
             </div>
 
@@ -227,7 +191,7 @@ const CreateSchool: React.FC = () => {
               whileHover={{ scale: 1.05 }}
               whileTap={{ scale: 0.95 }}
             >
-              {"Enregistrer l'École"}
+              Enregistrer le Professeur
             </motion.button>
           </form>
         </motion.div>
@@ -249,4 +213,4 @@ const CreateSchool: React.FC = () => {
   );
 };
 
-export default CreateSchool;
+export default RegisterProf;
